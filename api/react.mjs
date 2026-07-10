@@ -20,17 +20,17 @@ export async function GET() {
     importMap
   })
 
-  const output = new PassThrough()
+  const writable = new PassThrough()
   const { promise, resolve, reject } = Promise.withResolvers()
 
   const { pipe } = renderToPipeableStream(element, {
     bootstrapModules: ['/static/client.js'],
 
     onShellReady() {
-      const body = Readable.toWeb(output)
+      const readable = Readable.toWeb(writable)
 
       resolve(
-        new Response(body, {
+        new Response(readable, {
           status: 200,
           headers: {
             'Content-Type': 'text/html; charset=utf-8'
@@ -38,15 +38,13 @@ export async function GET() {
         })
       )
 
-      pipe(output)
+      pipe(writable)
     },
 
-    onShellError(error) {
-      reject(error)
-    },
+    onShellError: console.error,
 
     onError(error) {
-      console.error(error)
+      reject(error)
     }
   })
 
