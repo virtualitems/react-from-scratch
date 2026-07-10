@@ -1,10 +1,9 @@
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { createElement } from 'react'
-import { renderToPipeableStream } from 'react-dom/server'
 
-import { StreamResponse } from '../server/http.js'
 import { HomePage } from '../server/HomePage.js'
+import { render } from '../server/ssr.js'
 
 /**
  * @param {Request} request
@@ -20,24 +19,12 @@ export async function GET() {
     importMap
   })
 
-  const { promise, resolve, reject } = Promise.withResolvers()
+  const bootstrapModules = ['/static/client.js']
 
-  const { pipe } = renderToPipeableStream(element, {
-    bootstrapModules: ['/static/client.js'],
+  const responseInit = {
+    status: 200,
+    headers: { 'Content-Type': 'text/html; charset=utf-8' }
+  }
 
-    onShellReady() {
-      const response = new StreamResponse({
-        status: 200,
-        headers: { 'Content-Type': 'text/html; charset=utf-8' }
-      })
-      resolve(response)
-      pipe(response.writable)
-    },
-
-    onShellError(error) {
-      reject(error)
-    }
-  })
-
-  return await promise
+  return await render(element, bootstrapModules, responseInit)
 }
