@@ -6,11 +6,16 @@ import { Document } from '../../common/components/Document.mjs'
 /**
  * @param {object} props
  * @param {string} props.title
+ * @param {string} props.identifierPrefix
  * @param {undefined | number} props.initialCount
  * @returns {React.ReactElement}
  */
 export function CounterPage(props) {
-  const { title, initialCount } = props
+  const { title, initialCount, identifierPrefix } = props
 
-  return ce(Document, { title }, ce('div', { id: 'root' }, ce(App, { initialCount })))
+  if (typeof title !== 'string') throw new TypeError('title must be a string')
+
+  if (typeof identifierPrefix !== 'string') throw new TypeError('identifierPrefix must be a string')
+
+  return ce(Document, { title }, ce('div', { id: identifierPrefix }, ce(App, { initialCount })))
 }

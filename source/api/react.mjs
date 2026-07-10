@@ -4,6 +4,7 @@ import { preconnect, prefetchDNS, preinit, preinitModule, preload, preloadModule
 
 import { CounterPage } from '../server/counter/components/CounterPage.mjs'
 import { StreamResponse } from '../server/common/http.mjs'
+import { identifierPrefixes } from '../shared/constants/react.mjs'
 
 const importMap = {
   imports: {
@@ -105,6 +106,7 @@ function reactRenderToPipeableStream(element, props, options) {
  */
 export async function GET() {
   const element = createElement(CounterPage, {
+    identifierPrefix: identifierPrefixes.counter,
     title: 'dom-server',
     importMap,
     initialCount: 0
@@ -120,7 +122,6 @@ export async function GET() {
 
   const promise = new Promise((resolve, reject) => {
     const { pipe } = reactRenderToPipeableStream(element, linkerProps, {
-      identifierPrefix: 'counter',
       bootstrapModules: ['/static/counter/scripts/client.js'],
       importMap,
       onShellReady() {

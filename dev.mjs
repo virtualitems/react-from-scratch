@@ -77,6 +77,13 @@ app.use(
   })
 )
 
+app.use(
+  '/shared',
+  serveStatic(join(import.meta.dirname, 'source', 'shared'), {
+    index: false
+  })
+)
+
 app.use(toNodeHandler(fetchHandler))
 
 createServer(app).listen(port, host, () => console.log(`http://${host}:${port}`))
