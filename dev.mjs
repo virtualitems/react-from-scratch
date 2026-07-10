@@ -72,7 +72,7 @@ const app = connect()
 
 app.use(
   '/static',
-  serveStatic(join(import.meta.dirname, 'client'), {
+  serveStatic(join(import.meta.dirname, 'source', 'client'), {
     index: false
   })
 )
