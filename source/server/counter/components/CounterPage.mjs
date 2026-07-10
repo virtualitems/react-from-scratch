@@ -10,7 +10,7 @@ import Document from '../../common/components/Document.mjs'
  * @param {undefined | number} props.initialCount
  * @returns {React.ReactElement}
  */
-export function CounterPage(props) {
+export default function CounterPage(props) {
   const { title, initialCount, identifierPrefix } = props
 
   if (typeof title !== 'string') throw new TypeError('title must be a string')

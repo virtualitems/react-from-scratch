@@ -1,6 +1,6 @@
 import { createElement } from 'react'
 
-import { CounterPage } from '../server/counter/components/CounterPage.mjs'
+import CounterPage from '../server/counter/components/CounterPage.mjs'
 import { renderElementToPipeableStream, StreamResponse } from '../server/common/http.mjs'
 import { identifierPrefixes } from '../shared/constants/react.mjs'
 
