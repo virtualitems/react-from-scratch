@@ -1,6 +1,6 @@
 import { createElement } from 'react'
 import { hydrateRoot } from 'react-dom/client'
-import { App } from './App.js'
+import { App } from '../components/App.js'
 
 const rootElement = document.getElementById('root')
 

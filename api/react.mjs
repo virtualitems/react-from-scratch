@@ -2,8 +2,8 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { createElement } from 'react'
 
-import { HomePage } from '../server/HomePage.js'
-import { render } from '../server/ssr.js'
+import { CounterPage } from '../server/counter/components/CounterPage.mjs'
+import { render } from '../server/common/ssr.mjs'
 
 /**
  * @param {Request} request
@@ -12,14 +12,18 @@ import { render } from '../server/ssr.js'
 export async function GET() {
   const __dirname = import.meta.dirname
 
-  const importMap = await readFile(join(__dirname, '..', 'server', 'importmap.json'), 'utf-8')
+  const importMap = await readFile(
+    join(__dirname, '..', 'server', 'counter', 'imports', 'counter.json'),
+    'utf-8'
+  )
 
-  const element = createElement(HomePage, {
+  const element = createElement(CounterPage, {
     title: 'dom-server',
-    importMap
+    importMap,
+    initialCount: 0
   })
 
-  const bootstrapModules = ['/static/client.js']
+  const bootstrapModules = ['/static/counter/scripts/client.js']
 
   const responseInit = {
     status: 200,
