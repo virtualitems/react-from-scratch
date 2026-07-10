@@ -7,16 +7,15 @@ import { Document } from '../../common/components/Document.mjs'
 /**
  * @param {object} props
  * @param {string} props.title
- * @param {string} props.importMap
  * @param {undefined | number} props.initialCount
  * @returns {React.ReactElement}
  */
 export function CounterPage(props) {
-  const { title, importMap, initialCount } = props
+  const { title, initialCount } = props
 
   preconnect('https://esm.sh')
   preinit('/static/global.css', { as: 'style' })
   preinit('/static/counter/styles/app.css', { as: 'style' })
 
-  return ce(Document, { title, importMap }, ce('div', { id: 'root' }, ce(App, { initialCount })))
+  return ce(Document, { title }, ce('div', { id: 'root' }, ce(App, { initialCount })))
 }

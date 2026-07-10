@@ -1,34 +1,54 @@
-import { readFile } from 'node:fs/promises'
-import { join } from 'node:path'
 import { createElement } from 'react'
+import { renderToPipeableStream } from 'react-dom/server'
 
 import { CounterPage } from '../server/counter/components/CounterPage.mjs'
-import { render } from '../server/common/ssr.mjs'
+import { StreamResponse } from '../server/common/http.mjs'
+
+const importMap = {
+  imports: {
+    react: 'https://esm.sh/react@19.2.7',
+    'react-dom/client': 'https://esm.sh/react-dom@19.2.7/client'
+  }
+}
 
 /**
  * @param {Request} request
  * @returns {Response}
  */
 export async function GET() {
-  const __dirname = import.meta.dirname
-
-  const importMap = await readFile(
-    join(__dirname, '..', 'server', 'counter', 'imports', 'counter.json'),
-    'utf-8'
-  )
-
   const element = createElement(CounterPage, {
     title: 'dom-server',
     importMap,
     initialCount: 0
   })
 
-  const bootstrapModules = ['/static/counter/scripts/client.js']
+  const promise = new Promise((resolve, reject) => {
+    const { pipe } = renderToPipeableStream(element, {
+      bootstrapModules: ['/static/counter/scripts/client.js'],
+      importMap,
+      onShellReady() {
+        const response = new StreamResponse({
+          status: 200,
+          headers: { 'Content-Type': 'text/html' }
+        })
+        pipe(response.writable)
+        resolve(response)
+      },
+      onShellError(error) {
+        console.error(error)
+        reject(new Response(error.message, { status: 500 }))
+      },
+      onAllReady() {
+        console.log('onAllReady')
+      },
+      onError(error) {
+        console.log('onError', error)
+      },
+      onHeaders() {
+        console.log('onHeaders')
+      }
+    })
+  })
 
-  const responseInit = {
-    status: 200,
-    headers: { 'Content-Type': 'text/html; charset=utf-8' }
-  }
-
-  return await render(element, bootstrapModules, responseInit)
+  return await promise
 }
