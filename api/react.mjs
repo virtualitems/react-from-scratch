@@ -1,30 +1,10 @@
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
-import { PassThrough, Readable } from 'node:stream'
 import { createElement } from 'react'
 import { renderToPipeableStream } from 'react-dom/server'
 
+import { StreamResponse } from '../server/http.js'
 import { HomePage } from '../server/HomePage.js'
-
-class StreamResponse extends Response {
-  /** @type {PassThrough} */
-  #writable
-
-  /**
-   * @param {ResponseInit} init
-   */
-  constructor(init) {
-    const writable = new PassThrough()
-    const readable = Readable.toWeb(writable)
-    super(readable, init)
-
-    this.#writable = writable
-  }
-
-  get writable() {
-    return this.#writable
-  }
-}
 
 /**
  * @param {Request} request
@@ -59,5 +39,5 @@ export async function GET() {
     }
   })
 
-  return promise
+  return await promise
 }
