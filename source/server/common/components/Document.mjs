@@ -10,7 +10,7 @@ import { createElement as ce } from 'react'
  * @param {undefined | React.ReactNode} props.children
  * @returns {React.ReactElement}
  */
-export function Document(props) {
+export default function Document(props) {
   const { title, lang, linkedDataScript, children } = props
   const charSet = 'UTF-8'
   const viewport = 'width=device-width, initial-scale=1.0'

@@ -1,7 +1,7 @@
 import { createElement as ce } from 'react'
 
 import { App } from '../../../client/counter/components/App.js'
-import { Document } from '../../common/components/Document.mjs'
+import Document from '../../common/components/Document.mjs'
 
 /**
  * @param {object} props
