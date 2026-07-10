@@ -120,6 +120,7 @@ export async function GET() {
 
   const promise = new Promise((resolve, reject) => {
     const { pipe } = reactRenderToPipeableStream(element, linkerProps, {
+      identifierPrefix: 'counter',
       bootstrapModules: ['/static/counter/scripts/client.js'],
       importMap,
       onShellReady() {
