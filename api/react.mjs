@@ -54,9 +54,7 @@ export async function GET() {
       pipe(response.writable)
     },
 
-    onShellError: console.error,
-
-    onError(error) {
+    onShellError(error) {
       reject(error)
     }
   })
