@@ -1,5 +1,5 @@
 import { renderToPipeableStream } from 'react-dom/server'
-import { StreamResponse } from './http.js'
+import { StreamResponse } from './http.mjs'
 
 /**
  * @param {import('react').ReactElement} element
