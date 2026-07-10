@@ -6,6 +6,26 @@ import { renderToPipeableStream } from 'react-dom/server'
 
 import { HomePage } from '../server/HomePage.js'
 
+class StreamResponse extends Response {
+  /** @type {PassThrough} */
+  #writable
+
+  /**
+   * @param {ResponseInit} init
+   */
+  constructor(init) {
+    const writable = new PassThrough()
+    const readable = Readable.toWeb(writable)
+    super(readable, init)
+
+    this.#writable = writable
+  }
+
+  get writable() {
+    return this.#writable
+  }
+}
+
 /**
  * @param {Request} request
  * @returns {Response}
@@ -20,25 +40,18 @@ export async function GET() {
     importMap
   })
 
-  const writable = new PassThrough()
   const { promise, resolve, reject } = Promise.withResolvers()
 
   const { pipe } = renderToPipeableStream(element, {
     bootstrapModules: ['/static/client.js'],
 
     onShellReady() {
-      const readable = Readable.toWeb(writable)
-
-      resolve(
-        new Response(readable, {
-          status: 200,
-          headers: {
-            'Content-Type': 'text/html; charset=utf-8'
-          }
-        })
-      )
-
-      pipe(writable)
+      const response = new StreamResponse({
+        status: 200,
+        headers: { 'Content-Type': 'text/html; charset=utf-8' }
+      })
+      resolve(response)
+      pipe(response.writable)
     },
 
     onShellError: console.error,
