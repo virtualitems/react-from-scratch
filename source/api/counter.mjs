@@ -19,8 +19,7 @@ export async function GET() {
   const element = createElement(CounterPage, {
     identifierPrefix: identifierPrefixes.counter,
     title: 'dom-server',
-    importMap,
-    initialCount: 0
+    importMap
   })
 
   const linkerProps = {
