@@ -14,7 +14,7 @@ import { Suspense, createElement as ce, use, useState } from 'react'
  * @returns {React.ReactElement}
  */
 function DelayReason(props) {
-  const [delay] = useState(() => new Promise((resolve) => setTimeout(resolve, 4000)))
+  const [delay] = useState(() => new Promise((resolve) => setTimeout(resolve, 1200)))
   use(delay)
   return ce(App, props)
 }
