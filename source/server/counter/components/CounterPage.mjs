@@ -1,6 +1,6 @@
 import { createElement as ce } from 'react'
 
-import { SuspenseWrapper } from '../../../client/counter/components/App.js'
+import { ServerSuspenseWrapper } from '../../../client/counter/components/App.js'
 import Document from '../../common/components/Document.mjs'
 
 /**
@@ -20,6 +20,6 @@ export default function CounterPage(props) {
   return ce(
     Document,
     { title },
-    ce('div', { id: identifierPrefix }, ce(SuspenseWrapper, { initialCount: 0 }))
+    ce('div', { id: identifierPrefix }, ce(ServerSuspenseWrapper, { initialCount: 0 }))
   )
 }
