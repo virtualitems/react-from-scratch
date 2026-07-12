@@ -1,4 +1,35 @@
-import { createElement as ce, useState } from 'react'
+import { Suspense, createElement as ce, use, useState } from 'react'
+
+/**
+ * @param {object} props
+ * @param {undefined | number} props.initialCount
+ * @returns {React.ReactElement}
+ */
+function DelayReason(props) {
+  const [delay] = useState(() => new Promise((resolve) => setTimeout(resolve, 4000)))
+  use(delay)
+  return ce(App, props)
+}
+
+/**
+ * @param {object} props
+ * @param {undefined | number} props.initialCount
+ * @returns {React.ReactElement}
+ */
+export function SuspenseWrapper(props) {
+  return ce(
+    Suspense,
+    {
+      fallback: ce(
+        'main',
+        { className: 'counter' },
+        ce('h1', { className: 'counter__title' }, 'Contador'),
+        ce('p', { className: 'counter__value' }, 'Cargando contador...')
+      )
+    },
+    ce(DelayReason, props)
+  )
+}
 
 /**
  *

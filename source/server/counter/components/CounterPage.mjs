@@ -1,6 +1,6 @@
 import { createElement as ce } from 'react'
 
-import { App } from '../../../client/counter/components/App.js'
+import { SuspenseWrapper } from '../../../client/counter/components/App.js'
 import Document from '../../common/components/Document.mjs'
 
 /**
@@ -11,11 +11,15 @@ import Document from '../../common/components/Document.mjs'
  * @returns {React.ReactElement}
  */
 export default function CounterPage(props) {
-  const { title, initialCount, identifierPrefix } = props
+  const { title, identifierPrefix } = props
 
   if (typeof title !== 'string') throw new TypeError('title must be a string')
 
   if (typeof identifierPrefix !== 'string') throw new TypeError('identifierPrefix must be a string')
 
-  return ce(Document, { title }, ce('div', { id: identifierPrefix }, ce(App, { initialCount })))
+  return ce(
+    Document,
+    { title },
+    ce('div', { id: identifierPrefix }, ce(SuspenseWrapper, { initialCount: 0 }))
+  )
 }
