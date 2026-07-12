@@ -32,7 +32,7 @@ export async function GET() {
 
   const promise = new Promise((resolve, reject) => {
     const { pipe } = renderElementToPipeableStream(element, linkerProps, {
-      bootstrapModules: ['/static/counter/scripts/client.js'],
+      bootstrapModules: ['/static/counter/scripts/counter.client.mjs'],
       importMap,
       onShellReady() {
         const response = new StreamResponse({
