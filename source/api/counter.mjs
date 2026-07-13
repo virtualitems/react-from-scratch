@@ -6,8 +6,8 @@ import { identifierPrefixes } from '../shared/constants/react.mjs'
 
 const importMap = {
   imports: {
-    react: 'https://esm.sh/react@19.2.7',
-    'react-dom/client': 'https://esm.sh/react-dom@19.2.7/client'
+    react: 'https://esm.sh/react@19.2.7?dev',
+    'react-dom/client': 'https://esm.sh/react-dom@19.2.7/client?dev'
   }
 }
 
@@ -18,8 +18,7 @@ const importMap = {
 export async function GET() {
   const element = createElement(CounterPage, {
     identifierPrefix: identifierPrefixes.counter,
-    title: 'dom-server',
-    importMap
+    title: 'dom-server'
   })
 
   const linkerProps = {
