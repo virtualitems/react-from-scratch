@@ -9,6 +9,8 @@ import { ErrorBoundary } from '../../../shared/components/ErrorBoundary.mjs'
  * @returns {React.ReactElement}
  */
 function App() {
+  throw new Error('Error durante el renderizado incremental del cliente.')
+
   return ce(
     'main',
     { className: 'error error--recovered' },
@@ -25,13 +27,12 @@ function App() {
  * @returns {React.ReactElement}
  */
 function ServerFailingChunk() {
-  const [incrementalPromise] = useState(
-    () => new Promise((resolve) => setTimeout(resolve, 1200))
-  )
-
-  use(incrementalPromise)
+  const [delay] = useState(() => new Promise((resolve) => setTimeout(resolve, 1200)))
+  use(delay)
 
   throw new Error('Error durante el renderizado incremental del servidor.')
+
+  return ce(App)
 }
 
 /**
@@ -58,7 +59,11 @@ function ErrorFallback(props) {
     { className: 'error error--failed' },
     ce('h1', { className: 'error__title' }, 'Error'),
     ce('p', { className: 'error__value' }, error.message),
-    ce('div', { className: 'error__panel' }, 'La hidratacion incremental detecto que el servidor no pudo completar ese fragmento.')
+    ce(
+      'div',
+      { className: 'error__panel' },
+      'La hidratacion incremental detecto que el servidor no pudo completar ese fragmento.'
+    )
   )
 }
 
@@ -77,7 +82,7 @@ export function ServerSuspenseWrapper() {
     {
       fallback: ErrorFallback,
       onError(error) {
-        console.error('Chunk hydration error', error)
+        console.error('Error de hidratacion del chunk del servidor', error)
       }
     },
     ce(Suspense, { fallback: ce(SuspenseFallback) }, ce(ServerFailingChunk))
@@ -96,7 +101,7 @@ export function ClientSuspenseWrapper() {
     {
       fallback: ErrorFallback,
       onError(error) {
-        console.error('Chunk hydration error', error)
+        console.error('Error de hidratacion del chunk del cliente', error)
       }
     },
     ce(Suspense, { fallback: ce(SuspenseFallback) }, ce(App))
