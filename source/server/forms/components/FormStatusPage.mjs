@@ -1,6 +1,6 @@
 import { createElement as ce } from 'react'
 
-import { ServerSuspenseWrapper } from '../../../client/forms/components/App.mjs'
+import App from '../../../client/forms/components/App.mjs'
 import Document from '../../common/components/Document.mjs'
 
 /**
@@ -16,5 +16,5 @@ export default function FormStatusPage(props) {
 
   if (typeof identifierPrefix !== 'string') throw new TypeError('identifierPrefix must be a string')
 
-  return ce(Document, { title }, ce('div', { id: identifierPrefix }, ce(ServerSuspenseWrapper)))
+  return ce(Document, { title }, ce('div', { id: identifierPrefix }, ce(App)))
 }

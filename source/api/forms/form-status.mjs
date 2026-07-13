@@ -8,6 +8,7 @@ import FormStatusPage from '../../server/forms/components/FormStatusPage.mjs'
 const importMap = {
   imports: {
     react: 'https://esm.sh/react@19.2.7?dev',
+    'react-dom': 'https://esm.sh/react-dom@19.2.7?dev',
     'react-dom/client': 'https://esm.sh/react-dom@19.2.7/client?dev'
   }
 }
