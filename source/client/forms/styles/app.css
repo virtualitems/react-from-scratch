@@ -1,0 +1,17 @@
+.form-status {
+  margin: 0 auto;
+  max-width: 46rem;
+  padding: 3rem 1.25rem;
+}
+
+.form-status__title {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.form-status__text {
+  margin-top: 0.75rem;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}

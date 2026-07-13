@@ -17,7 +17,8 @@ import { toNodeHandler } from 'srvx/node'
 const routes = new Map([
   ['/health', () => import('./source/api/health.mjs')],
   ['/counter', () => import('./source/api/counter.mjs')],
-  ['/error', () => import('./source/api/error.mjs')]
+  ['/error', () => import('./source/api/error.mjs')],
+  ['/forms/form-status', () => import('./source/api/forms/form-status.mjs')]
 ])
 
 const port = 3000
