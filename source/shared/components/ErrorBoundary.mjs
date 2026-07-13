@@ -2,9 +2,12 @@ import React from 'react'
 
 /**
  * @typedef Props
- * @type {import('react').PropsWithChildren<HTMLElement> & {
- *   fallback: React.ReactElement,
- *   onError: (error: Error, info: React.ErrorInfo) => void
+ * @type {import('react').PropsWithChildren<{
+ *   fallback: import('react').ComponentType<{
+ *     error: Error,
+ *     resetErrorBoundary: () => void
+ *   }>,
+ *   onError?: (error: Error, info: import('react').ErrorInfo) => void
  * }}
  */
 
@@ -36,6 +39,7 @@ export class ErrorBoundary extends React.Component {
    */
   constructor(props) {
     super(props)
+    const self = this
 
     const { fallback, onError } = props
 
@@ -43,12 +47,15 @@ export class ErrorBoundary extends React.Component {
       throw new TypeError('Fallback must be a function')
     }
 
-    if (typeof onError !== 'function') {
+    if (onError !== undefined && typeof onError !== 'function') {
       throw new TypeError('onError must be a function')
     }
 
     this.state = initialState
-    this.resetErrorBoundary = this.resetErrorBoundary.bind(this)
+
+    this.resetErrorBoundary = () => {
+      self.setState(initialState)
+    }
   }
 
   /**
@@ -64,15 +71,13 @@ export class ErrorBoundary extends React.Component {
    * @param {import('react').ErrorInfo} info
    */
   componentDidCatch(error, info) {
-    this.props.onError(error, info)
-  }
-
-  resetErrorBoundary() {
-    this.setState(initialState)
+    if (typeof this.props.onError === 'function') {
+      this.props.onError(error, info)
+    }
   }
 
   /**
-   * @returns {import('react').ReactElement}
+   * @returns {import('react').ReactNode}
    */
   render() {
     const { error } = this.state
