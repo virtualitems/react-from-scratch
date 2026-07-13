@@ -1,6 +1,6 @@
 import { createElement as ce } from 'react'
 
-import { ServerSuspenseWrapper } from '../../../client/error/components/App.js'
+import { ServerSuspenseWrapper } from '../../../client/error/components/App.mjs'
 import Document from '../../common/components/Document.mjs'
 
 /**
