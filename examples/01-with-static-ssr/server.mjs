@@ -1,5 +1,4 @@
 import { createServer } from 'node:http'
-import { Readable } from 'node:stream'
 
 import { renderToStaticMarkup } from 'react-dom/server'
 
