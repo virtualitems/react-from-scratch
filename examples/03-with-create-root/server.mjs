@@ -1,12 +1,10 @@
 import { createServer } from 'node:http'
-import { Readable } from 'node:stream'
 
-import { renderToReadableStream } from 'react-dom/server'
+import { renderToString } from 'react-dom/server'
 
 import { createElement } from '../shared/hyperscript.mjs'
 import { read } from '../shared/server/files.mjs'
 import Page from './Page.mjs'
-import Linker from '../shared/server/Linker.mjs'
 
 /**
  * @param {import('node:http').IncomingMessage} request
@@ -29,20 +27,12 @@ async function listener(request, response) {
 
   const encoding = 'utf-8'
 
-  const element = createElement(Linker, null, createElement(Page))
+  const element = createElement(Page)
 
   try {
-    const stream = await renderToReadableStream(element, {
-      bootstrapModules: ['client.mjs'],
-      importMap: {
-        imports: {
-          react: 'https://esm.sh/react@19.2.7?dev',
-          'react-dom/client': 'https://esm.sh/react-dom@19.2.7/client?dev'
-        }
-      }
-    })
+    const html = renderToString(element)
     response.writeHead(200, { 'Content-Type': 'text/html' })
-    Readable.fromWeb(stream, { encoding }).pipe(response)
+    response.end(html, encoding)
   } catch (error) {
     console.error(error)
 
