@@ -15,10 +15,6 @@ const routes = {
  */
 
 /**
- * Pagination driven by local state: navigation jumps straight to whichever
- * route was clicked (no prev/next stepping), and each route's component is
- * fetched on demand via React.lazy the first time it's shown.
- *
  * @param {Props} props
  * @returns {import('react').ReactElement}
  */
@@ -27,14 +23,15 @@ export default function Router(props) {
   const [route, setRoute] = useState(initialRoute)
   const { Component: CurrentRoute } = routes[route]
 
-  return div(
-    null,
-    createElement(Suspense, { fallback: createElement(SuspenseFallback) }, createElement(CurrentRoute)),
-    div(
-      null,
-      Object.entries(routes).map(([key, { label }]) =>
-        button({ key, onClick: () => setRoute(key), disabled: key === route }, label)
-      )
-    )
+  const contents = createElement(
+    Suspense,
+    { fallback: createElement(SuspenseFallback) },
+    createElement(CurrentRoute)
   )
+
+  const buttons = Object.entries(routes).map(([key, { label }]) =>
+    button({ key, onClick: () => setRoute(key), disabled: key === route }, label)
+  )
+
+  return div(null, contents, div(null, buttons))
 }
