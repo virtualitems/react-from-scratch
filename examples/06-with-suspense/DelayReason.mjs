@@ -1,5 +1,6 @@
-import { createElement, use, useState } from 'react'
+import { use, useState } from 'react'
 
+import { createElement } from '../shared/hyperscript.mjs'
 import Clicker from './Clicker.mjs'
 
 /**

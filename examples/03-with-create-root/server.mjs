@@ -25,6 +25,12 @@ async function listener(request, response) {
     return response.end(content)
   }
 
+  if (request.url === '/shared/hyperscript.mjs') {
+    const content = await read('shared', 'hyperscript.mjs')
+    response.writeHead(200, { 'Content-Type': 'application/javascript' })
+    return response.end(content)
+  }
+
   const encoding = 'utf-8'
 
   const element = createElement(Page)

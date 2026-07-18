@@ -1,6 +1,6 @@
-import { createElement } from 'react'
 import { createRoot } from 'react-dom/client'
 
+import { createElement } from '../shared/hyperscript.mjs'
 import Clicker from './Clicker.mjs'
 
 const rootElement = document.getElementById('root')

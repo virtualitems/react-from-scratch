@@ -1,6 +1,4 @@
-import { createElement } from 'react'
-
-import { Suspense } from '../shared/hyperscript.mjs'
+import { createElement, Suspense } from '../shared/hyperscript.mjs'
 import Content from './Content.mjs'
 import ErrorBoundary from '../shared/ErrorBoundary.mjs'
 import ErrorFallback from './ErrorFallback.mjs'

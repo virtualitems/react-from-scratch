@@ -1,5 +1,6 @@
-import { Children, createElement, Fragment } from 'react'
 import { preconnect, prefetchDNS, preinit, preinitModule, preload, preloadModule } from 'react-dom'
+
+import { createElement, Fragment } from '../hyperscript.mjs'
 
 /**
  * @typedef {object} ResourcesCollection

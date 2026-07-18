@@ -1,5 +1,4 @@
-// import { createElement } from 'react'
-import { html, head, body, meta, title, script } from '../hyperscript.mjs'
+import { html, head, body, meta, title } from '../hyperscript.mjs'
 
 /**
  * @typedef {object} Props

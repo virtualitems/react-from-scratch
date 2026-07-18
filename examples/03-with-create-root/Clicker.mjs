@@ -1,4 +1,6 @@
-import { createElement, useState } from 'react'
+import { useState } from 'react'
+
+import { button } from '../shared/hyperscript.mjs'
 
 /**
  * @typedef {object} Props
@@ -15,5 +17,5 @@ export default function Clicker(props) {
 
   const onClick = setCount.bind(null, (prev) => prev + 1)
 
-  return createElement('button', { onClick }, `Clicked ${count} times`)
+  return button({ onClick }, `Clicked ${count} times`)
 }

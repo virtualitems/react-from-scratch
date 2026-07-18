@@ -1,4 +1,4 @@
-import { createElement, div } from '../shared/hyperscript.mjs'
+import { createElement, div, script } from '../shared/hyperscript.mjs'
 import Document from '../shared/server/Document.mjs'
 
 /**
@@ -12,9 +12,9 @@ export default function Page() {
     Document,
     {
       title: 'dom-server',
-      headSlot: createElement('script', { type: 'importmap' }, importMap)
+      headSlot: script({ type: 'importmap' }, importMap)
     },
     div({ id: 'root' }),
-    createElement('script', { type: 'module', src: 'client.mjs' })
+    script({ type: 'module', src: 'client.mjs' })
   )
 }

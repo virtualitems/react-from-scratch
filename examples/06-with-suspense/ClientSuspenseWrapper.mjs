@@ -1,6 +1,4 @@
-import { createElement } from 'react'
-
-import { Suspense } from '../shared/hyperscript.mjs'
+import { createElement, Suspense } from '../shared/hyperscript.mjs'
 import Clicker from './Clicker.mjs'
 import SuspenseFallback from './SuspenseFallback.mjs'
 
