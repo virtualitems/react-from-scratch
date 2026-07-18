@@ -1,6 +1,6 @@
 import { createServer } from 'node:http'
 import { Readable } from 'node:stream'
-import { readFile } from 'node:fs/promises'
+import { open } from 'node:fs/promises'
 import { resolve } from 'node:path'
 
 import { renderToReadableStream } from 'react-dom/server'
@@ -23,6 +23,17 @@ function resources() {
 }
 
 /**
+ * @param  {...string[]} pathSegments
+ * @returns {Promise<Buffer>}
+ */
+async function read(...pathSegments) {
+  const file = await open(resolve(import.meta.dirname, ...pathSegments), 'r')
+  const content = await file.readFile()
+  await file.close()
+  return content
+}
+
+/**
  * @param {import('node:http').IncomingMessage} request
  * @param {import('node:http').ServerResponse} response
  */
@@ -32,9 +43,9 @@ async function listener(request, response) {
   const encoding = 'utf-8'
 
   if (request.url === '/global.css') {
-    const content = await readFile(resolve(import.meta.dirname, 'global.css'), encoding)
+    const content = await read('global.css')
     response.writeHead(200, { 'Content-Type': 'text/css' })
-    return response.end(content, encoding)
+    return response.end(content)
   }
 
   const element = createElement(Linker, resources(), App())
