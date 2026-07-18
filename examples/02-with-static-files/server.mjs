@@ -1,13 +1,12 @@
 import { createServer } from 'node:http'
 import { Readable } from 'node:stream'
-import { open } from 'node:fs/promises'
-import { resolve } from 'node:path'
 
 import { renderToReadableStream } from 'react-dom/server'
 
+import { createElement, h1 } from '../shared/hyperscript.mjs'
+import { read } from '../shared/server/files.mjs'
 import Document from '../shared/server/Document.mjs'
 import Linker from '../shared/server/Linker.mjs'
-import { createElement, h1 } from '../shared/hyperscript.mjs'
 
 /**
  * @returns {import('react').ReactElement}
@@ -23,17 +22,6 @@ function resources() {
   return {
     preinitList: [{ href: 'global.css', options: { as: 'style' } }]
   }
-}
-
-/**
- * @param  {...string[]} pathSegments
- * @returns {Promise<Buffer>}
- */
-async function read(...pathSegments) {
-  const file = await open(resolve(import.meta.dirname, ...pathSegments), 'r')
-  const content = await file.readFile()
-  await file.close()
-  return content
 }
 
 /**
