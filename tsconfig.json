@@ -1,0 +1,45 @@
+{
+    "compilerOptions": {
+        "rootDir": "./",
+        "outDir": "./dist",
+        "module": "esnext",
+        "target": "esnext",
+        "moduleResolution": "bundler",
+        "lib": [
+            "DOM.AsyncIterable",
+            "DOM.Iterable",
+            "DOM"
+        ],
+        "types": [
+            "node"
+        ],
+        "jsx": "react-jsx",
+        "strict": true,
+        "alwaysStrict": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "strictBindCallApply": true,
+        "strictBuiltinIteratorReturn": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "useUnknownInCatchVariables": true,
+        "exactOptionalPropertyTypes": true,
+        "noUncheckedIndexedAccess": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedSideEffectImports": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": false
+    },
+    "include": [
+        "source/**/*.ts",
+        "source/**/*.tsx"
+    ]
+}
