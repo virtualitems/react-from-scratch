@@ -1,29 +1,7 @@
 import { createElement } from 'react'
-import { renderToPipeableStream } from 'react-dom/server'
-
-import { PassThrough, Readable } from 'node:stream'
+import { renderToReadableStream } from 'react-dom/server.edge'
 
 import Linker from './components/linker.mjs'
-
-export class StreamResponse extends Response {
-  /** @type {PassThrough} */
-  #writable
-
-  /**
-   * @param {ResponseInit} init
-   */
-  constructor(init) {
-    const writable = new PassThrough()
-    const readable = Readable.toWeb(writable)
-    super(readable, init)
-
-    this.#writable = writable
-  }
-
-  get writable() {
-    return this.#writable
-  }
-}
 
 /**
  * @param {import('react').ReactElement} element
@@ -34,8 +12,9 @@ export class StreamResponse extends Response {
  * @param {Array<{ href: string, options: import('react-dom').PreinitModuleOptions }>} [sources.preinitModuleList]
  * @param {Array<{ href: string, options: import('react-dom').PreloadOptions }>} [sources.preloadList]
  * @param {Array<{ href: string, options: import('react-dom').PreloadModuleOptions }>} [sources.preloadModuleList]
- * @param {import('react-dom/server').RenderToPipeableStreamOptions} options
+ * @param {import('react-dom/server').RenderToReadableStreamOptions} options
+ * @returns {Promise<ReadableStream>}
  */
-export function renderElementToPipeableStream(element, sources, options) {
-  return renderToPipeableStream(createElement(Linker, sources, element), options)
+export function renderElementToReadableStream(element, sources, options) {
+  return renderToReadableStream(createElement(Linker, sources, element), options)
 }
