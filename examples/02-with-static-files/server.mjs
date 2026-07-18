@@ -39,7 +39,7 @@ async function listener(request, response) {
     return response.end(content)
   }
 
-  const element = createElement(Linker, resources(), App())
+  const element = createElement(Linker, resources(), createElement(App))
 
   try {
     const stream = await renderToReadableStream(element)
