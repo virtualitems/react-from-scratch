@@ -5,7 +5,7 @@ import { renderToReadableStream } from 'react-dom/server'
 
 import { createElement } from '../shared/hyperscript.mjs'
 import { read } from '../shared/server/files.mjs'
-import App from './App.mjs'
+import Page from './Page.mjs'
 import Linker from '../shared/server/Linker.mjs'
 
 /**
@@ -24,15 +24,15 @@ function resources() {
 async function listener(request, response) {
   console.info(new Date().toISOString(), request.method, request.url)
 
-  const encoding = 'utf-8'
-
   if (request.url === '/global.css') {
     const content = await read('shared', 'client', 'global.css')
     response.writeHead(200, { 'Content-Type': 'text/css' })
     return response.end(content)
   }
 
-  const element = createElement(Linker, resources(), createElement(App))
+  const encoding = 'utf-8'
+
+  const element = createElement(Linker, resources(), createElement(Page))
 
   try {
     const stream = await renderToReadableStream(element)

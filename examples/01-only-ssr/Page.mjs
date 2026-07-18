@@ -4,7 +4,7 @@ import { createElement, h1 } from '../shared/hyperscript.mjs'
 /**
  * @returns {import('react').ReactElement}
  */
-export default function App() {
+export default function Page() {
   return createElement(
     Document,
     { title: 'dom-server' },

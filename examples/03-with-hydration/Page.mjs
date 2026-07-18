@@ -5,7 +5,7 @@ import Clicker from './Clicker.mjs'
 /**
  * @returns {import('react').ReactElement}
  */
-export default function App() {
+export default function Page() {
   return createElement(
     Document,
     { title: 'dom-server' },

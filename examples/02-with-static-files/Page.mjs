@@ -4,6 +4,6 @@ import Document from '../shared/server/Document.mjs'
 /**
  * @returns {import('react').ReactElement}
  */
-export default function App() {
+export default function Page() {
   return createElement(Document, { title: 'dom-server' }, h1(null, 'Greetings!'))
 }

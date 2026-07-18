@@ -4,7 +4,7 @@ import { Readable } from 'node:stream'
 import { renderToReadableStream } from 'react-dom/server'
 
 import { createElement } from '../shared/hyperscript.mjs'
-import App from './App.mjs'
+import Page from './Page.mjs'
 
 /**
  * @param {import('node:http').IncomingMessage} request
@@ -15,7 +15,7 @@ async function listener(request, response) {
 
   const encoding = 'utf-8'
 
-  const element = createElement(App)
+  const element = createElement(Page)
 
   try {
     const stream = await renderToReadableStream(element)
