@@ -21,10 +21,12 @@ function App() {
 async function listener(request, response) {
   console.info(new Date().toISOString(), request.method, request.url)
 
+  const encoding = 'utf-8'
+
   try {
     const stream = await renderToReadableStream(App())
     response.writeHead(200, { 'Content-Type': 'text/html' })
-    Readable.fromWeb(stream).pipe(response)
+    Readable.fromWeb(stream, { encoding }).pipe(response)
   } catch (error) {
     console.error(error)
 
@@ -34,7 +36,7 @@ async function listener(request, response) {
       })
     }
 
-    response.end('Internal Server Error')
+    response.end('Internal Server Error', encoding)
   }
 }
 
