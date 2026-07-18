@@ -6,8 +6,9 @@ import { resolve } from 'node:path'
  * @returns {Promise<Buffer>}
  */
 export async function read(...pathSegments) {
+  const __basedir = resolve(import.meta.dirname, '..', '..')
   try {
-    const file = await open(resolve(import.meta.dirname, ...pathSegments), 'r')
+    const file = await open(resolve(__basedir, ...pathSegments), 'r')
     const content = await file.readFile()
     await file.close()
     return content
