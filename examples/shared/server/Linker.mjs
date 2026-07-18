@@ -1,15 +1,18 @@
-import { createElement, Fragment } from 'react'
+import { Children, createElement, Fragment } from 'react'
 import { preconnect, prefetchDNS, preinit, preinitModule, preload, preloadModule } from 'react-dom'
 
 /**
- * @typedef {object} Props
+ * @typedef {object} ResourcesCollection
  * @property {Array<{ href: string }>} [preconnectList]
  * @property {Array<{ href: string }>} [prefetchDNSList]
  * @property {Array<{ href: string, options: import('react-dom').PreinitOptions }>} [preinitList]
  * @property {Array<{ href: string, options: import('react-dom').PreinitModuleOptions }>} [preinitModuleList]
  * @property {Array<{ href: string, options: import('react-dom').PreloadOptions }>} [preloadList]
  * @property {Array<{ href: string, options: import('react-dom').PreloadModuleOptions }>} [preloadModuleList]
- * @property {import('react').ReactNode} [children]
+ */
+
+/**
+ * @typedef {import('react').PropsWithChildren<ResourcesCollection>} Props
  */
 
 /**
@@ -18,6 +21,7 @@ import { preconnect, prefetchDNS, preinit, preinitModule, preload, preloadModule
  */
 export default function Linker(props) {
   const {
+    children,
     preconnectList,
     prefetchDNSList,
     preinitList,
@@ -75,5 +79,5 @@ export default function Linker(props) {
     for (const resource of preloadModuleList) preloadModule(resource.href, resource.options)
   }
 
-  return createElement(Fragment, null, props.children)
+  return createElement(Fragment, null, children)
 }
