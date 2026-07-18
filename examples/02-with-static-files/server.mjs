@@ -9,6 +9,9 @@ import Document from '../shared/server/Document.mjs'
 import Linker from '../shared/server/Linker.mjs'
 import { createElement, h1 } from '../shared/hyperscript.mjs'
 
+/**
+ * @returns {import('react').ReactElement}
+ */
 function App() {
   return createElement(Document, { title: 'dom-server' }, h1(null, 'Greetings!'))
 }
