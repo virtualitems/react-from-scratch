@@ -23,8 +23,10 @@ async function listener(request, response) {
 
   const encoding = 'utf-8'
 
+  const element = createElement(App)
+
   try {
-    const stream = await renderToReadableStream(App())
+    const stream = await renderToReadableStream(element)
     response.writeHead(200, { 'Content-Type': 'text/html' })
     Readable.fromWeb(stream, { encoding }).pipe(response)
   } catch (error) {

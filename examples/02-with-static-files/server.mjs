@@ -37,8 +37,10 @@ async function listener(request, response) {
     return response.end(content, encoding)
   }
 
+  const element = createElement(Linker, resources(), App())
+
   try {
-    const stream = await renderToReadableStream(createElement(Linker, resources(), App()))
+    const stream = await renderToReadableStream(element)
     response.writeHead(200, { 'Content-Type': 'text/html' })
     Readable.fromWeb(stream, { encoding }).pipe(response)
   } catch (error) {
