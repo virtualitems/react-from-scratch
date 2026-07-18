@@ -3,17 +3,10 @@ import { Readable } from 'node:stream'
 
 import { renderToReadableStream } from 'react-dom/server'
 
-import { createElement, h1 } from '../shared/hyperscript.mjs'
+import { createElement } from '../shared/hyperscript.mjs'
 import { read } from '../shared/server/files.mjs'
-import Document from '../shared/server/Document.mjs'
+import App from './App.mjs'
 import Linker from '../shared/server/Linker.mjs'
-
-/**
- * @returns {import('react').ReactElement}
- */
-function App() {
-  return createElement(Document, { title: 'dom-server' }, h1(null, 'Greetings!'))
-}
 
 /**
  * @returns {import('../shared/server/Linker.mjs').ResourcesCollection}

@@ -3,22 +3,10 @@ import { Readable } from 'node:stream'
 
 import { renderToReadableStream } from 'react-dom/server'
 
-import { createElement, div } from '../shared/hyperscript.mjs'
-import Document from '../shared/server/Document.mjs'
-import Linker from '../shared/server/Linker.mjs'
-import ServerSuspenseWrapper from './ServerSuspenseWrapper.mjs'
+import { createElement } from '../shared/hyperscript.mjs'
 import { read } from '../shared/server/files.mjs'
-
-/**
- * @returns {import('react').ReactElement}
- */
-function App() {
-  return createElement(
-    Document,
-    { title: 'dom-server' },
-    div({ id: 'root' }, createElement(ServerSuspenseWrapper, { initialCount: 0 }))
-  )
-}
+import App from './App.mjs'
+import Linker from '../shared/server/Linker.mjs'
 
 /**
  * @returns {import('../shared/server/Linker.mjs').ResourcesCollection}

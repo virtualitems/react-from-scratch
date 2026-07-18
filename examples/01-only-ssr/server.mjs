@@ -3,16 +3,8 @@ import { Readable } from 'node:stream'
 
 import { renderToReadableStream } from 'react-dom/server'
 
-import Document from '../shared/server/Document.mjs'
-import { createElement, h1 } from '../shared/hyperscript.mjs'
-
-function App() {
-  return createElement(
-    Document,
-    { title: 'dom-server' },
-    h1(null, 'Greetings!'),
-  )
-}
+import { createElement } from '../shared/hyperscript.mjs'
+import App from './App.mjs'
 
 /**
  * @param {import('node:http').IncomingMessage} request
