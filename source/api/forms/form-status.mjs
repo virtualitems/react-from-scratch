@@ -3,11 +3,12 @@ import { createElement } from 'react'
 import { renderElementToReadableStream } from '../../server/common/http.mjs'
 import { identifierPrefixes } from '../../shared/constants/react.mjs'
 
-import FormStatusPage from '../../server/forms/components/FormStatusPage.mjs'
+import FormStatusPage from '../../server/forms/components/FormStatusPage.tsx'
 
 const importMap = {
   imports: {
     react: 'https://esm.sh/react@19.2.7?dev',
+    'react/jsx-runtime': 'https://esm.sh/react@19.2.7/jsx-runtime?dev',
     'react-dom': 'https://esm.sh/react-dom@19.2.7?dev',
     'react-dom/client': 'https://esm.sh/react-dom@19.2.7/client?dev'
   }

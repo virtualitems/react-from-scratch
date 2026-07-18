@@ -1,8 +1,10 @@
+import { readFile } from 'node:fs/promises'
 import { createServer } from 'node:http'
 import { join } from 'node:path'
 import connect from 'connect'
 import serveStatic from 'serve-static'
 import { toNodeHandler } from 'srvx/node'
+import ts from 'typescript'
 
 /**
  * @typedef {
@@ -71,7 +73,57 @@ async function fetchHandler(request) {
   }
 }
 
+/** @type {Map<string, string>} */
+const tsxMounts = new Map([
+  ['/static', join(import.meta.dirname, 'source', 'client')],
+  ['/shared', join(import.meta.dirname, 'source', 'shared')]
+])
+
+/**
+ * @param {import('node:http').IncomingMessage} request
+ * @param {import('node:http').ServerResponse} response
+ * @param {(error?: unknown) => void} next
+ */
+async function tsxMiddleware(request, response, next) {
+  const pathname = new URL(request.url, 'http://localhost').pathname
+
+  if (pathname.endsWith('.tsx') === false && pathname.endsWith('.ts') === false) {
+    next()
+    return
+  }
+
+  const mount = [...tsxMounts.entries()].find(([prefix]) => pathname.startsWith(`${prefix}/`))
+
+  if (mount === undefined) {
+    next()
+    return
+  }
+
+  const [prefix, basePath] = mount
+
+  try {
+    const filePath = join(basePath, decodeURIComponent(pathname.slice(prefix.length)))
+    const source = await readFile(filePath, 'utf8')
+
+    const result = ts.transpileModule(source, {
+      fileName: filePath,
+      compilerOptions: {
+        jsx: ts.JsxEmit.ReactJSX,
+        module: ts.ModuleKind.ESNext,
+        target: ts.ScriptTarget.ES2023
+      }
+    })
+
+    response.setHeader('Content-Type', 'text/javascript; charset=utf-8')
+    response.end(result.outputText)
+  } catch (error) {
+    next(error)
+  }
+}
+
 const app = connect()
+
+app.use(tsxMiddleware)
 
 app.use(
   '/static',

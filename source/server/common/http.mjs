@@ -1,7 +1,7 @@
 import { createElement } from 'react'
 import { renderToReadableStream } from 'react-dom/server.edge'
 
-import Linker from './components/linker.mjs'
+import Linker from './components/Linker.tsx'
 
 /**
  * @param {import('react').ReactElement} element

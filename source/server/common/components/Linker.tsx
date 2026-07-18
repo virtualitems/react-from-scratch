@@ -1,17 +1,28 @@
-import { createElement, Fragment } from 'react'
-import { preconnect, prefetchDNS, preinit, preinitModule, preload, preloadModule } from 'react-dom'
+import type { ReactElement, ReactNode } from 'react'
+import {
+  preconnect,
+  prefetchDNS,
+  preinit,
+  preinitModule,
+  preload,
+  preloadModule,
+  type PreinitModuleOptions,
+  type PreinitOptions,
+  type PreloadModuleOptions,
+  type PreloadOptions
+} from 'react-dom'
 
-/**
- * @param {object} props
- * @param {Array<{ href: string }>} [props.preconnectList]
- * @param {Array<{ href: string }>} [props.prefetchDNSList]
- * @param {Array<{ href: string, options: import('react-dom').PreinitOptions }>} [props.preinitList]
- * @param {Array<{ href: string, options: import('react-dom').PreinitModuleOptions }>} [props.preinitModuleList]
- * @param {Array<{ href: string, options: import('react-dom').PreloadOptions }>} [props.preloadList]
- * @param {Array<{ href: string, options: import('react-dom').PreloadModuleOptions }>} [props.preloadModuleList]
- * @param {import('react').ReactNode} [props.children]
- */
-export default function Linker(props) {
+interface Props {
+  preconnectList?: Array<{ href: string }>
+  prefetchDNSList?: Array<{ href: string }>
+  preinitList?: Array<{ href: string; options: PreinitOptions }>
+  preinitModuleList?: Array<{ href: string; options: PreinitModuleOptions }>
+  preloadList?: Array<{ href: string; options: PreloadOptions }>
+  preloadModuleList?: Array<{ href: string; options: PreloadModuleOptions }>
+  children?: ReactNode
+}
+
+export default function Linker(props: Props): ReactElement {
   const {
     preconnectList,
     prefetchDNSList,
@@ -70,5 +81,5 @@ export default function Linker(props) {
     for (const resource of preloadModuleList) preloadModule(resource.href, resource.options)
   }
 
-  return createElement(Fragment, null, props.children)
+  return <>{props.children}</>
 }

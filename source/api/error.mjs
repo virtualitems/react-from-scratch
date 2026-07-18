@@ -1,12 +1,13 @@
 import { createElement } from 'react'
 
-import ErrorPage from '../server/error/components/ErrorPage.mjs'
+import ErrorPage from '../server/error/components/ErrorPage.tsx'
 import { renderElementToReadableStream } from '../server/common/http.mjs'
 import { identifierPrefixes } from '../shared/constants/react.mjs'
 
 const importMap = {
   imports: {
     react: 'https://esm.sh/react@19.2.7?dev',
+    'react/jsx-runtime': 'https://esm.sh/react@19.2.7/jsx-runtime?dev',
     'react-dom/client': 'https://esm.sh/react-dom@19.2.7/client?dev'
   }
 }
