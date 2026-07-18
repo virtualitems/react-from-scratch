@@ -5,8 +5,8 @@ import { renderToReadableStream } from 'react-dom/server'
 
 import { createElement } from '../shared/hyperscript.mjs'
 import { read } from '../shared/server/files.mjs'
-import Page from './Page.mjs'
 import Linker from '../shared/server/Linker.mjs'
+import Page from './Page.mjs'
 
 /**
  * @returns {import('../shared/server/Linker.mjs').ResourcesCollection}
@@ -55,6 +55,18 @@ async function listener(request, response) {
     return response.end(content)
   }
 
+  if (request.url === '/RouteBroken.mjs') {
+    const content = await read('08-with-lazy', 'RouteBroken.mjs')
+    response.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' })
+    return response.end(content)
+  }
+
+  if (request.url === '/ErrorFallback.mjs') {
+    const content = await read('08-with-lazy', 'ErrorFallback.mjs')
+    response.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' })
+    return response.end(content)
+  }
+
   if (request.url === '/SuspenseFallback.mjs') {
     const content = await read('08-with-lazy', 'SuspenseFallback.mjs')
     response.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' })
@@ -73,6 +85,12 @@ async function listener(request, response) {
     return response.end(content)
   }
 
+  if (request.url === '/shared/ErrorBoundary.mjs') {
+    const content = await read('shared', 'ErrorBoundary.mjs')
+    response.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' })
+    return response.end(content)
+  }
+
   const encoding = 'utf-8'
 
   const element = createElement(Linker, resources(), createElement(Page))
@@ -85,6 +103,9 @@ async function listener(request, response) {
           react: 'https://esm.sh/react@19.2.7?dev',
           'react-dom/client': 'https://esm.sh/react-dom@19.2.7/client?dev'
         }
+      },
+      onError(error) {
+        console.log('onError', error)
       }
     })
 
