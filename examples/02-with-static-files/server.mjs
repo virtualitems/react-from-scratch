@@ -34,7 +34,7 @@ async function listener(request, response) {
   const encoding = 'utf-8'
 
   if (request.url === '/global.css') {
-    const content = await read('global.css')
+    const content = await read('shared', 'client', 'global.css')
     response.writeHead(200, { 'Content-Type': 'text/css' })
     return response.end(content)
   }
