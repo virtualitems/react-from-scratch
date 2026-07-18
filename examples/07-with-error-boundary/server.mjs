@@ -32,31 +32,31 @@ async function listener(request, response) {
   }
 
   if (request.url === '/Content.mjs') {
-    const content = await read('05-with-error-boundary', 'Content.mjs')
+    const content = await read('07-with-error-boundary', 'Content.mjs')
     response.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' })
     return response.end(content)
   }
 
   if (request.url === '/ErrorFallback.mjs') {
-    const content = await read('05-with-error-boundary', 'ErrorFallback.mjs')
+    const content = await read('07-with-error-boundary', 'ErrorFallback.mjs')
     response.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' })
     return response.end(content)
   }
 
   if (request.url === '/SuspenseFallback.mjs') {
-    const content = await read('05-with-error-boundary', 'SuspenseFallback.mjs')
+    const content = await read('07-with-error-boundary', 'SuspenseFallback.mjs')
     response.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' })
     return response.end(content)
   }
 
   if (request.url === '/ClientSuspenseWrapper.mjs') {
-    const content = await read('05-with-error-boundary', 'ClientSuspenseWrapper.mjs')
+    const content = await read('07-with-error-boundary', 'ClientSuspenseWrapper.mjs')
     response.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' })
     return response.end(content)
   }
 
   if (request.url === '/client.mjs') {
-    const content = await read('05-with-error-boundary', 'client.mjs')
+    const content = await read('07-with-error-boundary', 'client.mjs')
     response.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' })
     return response.end(content)
   }

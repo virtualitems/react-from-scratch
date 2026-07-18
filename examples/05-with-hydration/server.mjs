@@ -32,13 +32,13 @@ async function listener(request, response) {
   }
 
   if (request.url === '/Clicker.mjs') {
-    const content = await read('03-with-hydration', 'Clicker.mjs')
+    const content = await read('05-with-hydration', 'Clicker.mjs')
     response.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' })
     return response.end(content)
   }
 
   if (request.url === '/client.mjs') {
-    const content = await read('03-with-hydration', 'client.mjs')
+    const content = await read('05-with-hydration', 'client.mjs')
     response.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' })
     return response.end(content)
   }

@@ -32,25 +32,25 @@ async function listener(request, response) {
   }
 
   if (request.url === '/Clicker.mjs') {
-    const content = await read('04-with-server-suspense', 'Clicker.mjs')
+    const content = await read('06-with-suspense', 'Clicker.mjs')
     response.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' })
     return response.end(content)
   }
 
   if (request.url === '/SuspenseFallback.mjs') {
-    const content = await read('04-with-server-suspense', 'SuspenseFallback.mjs')
+    const content = await read('06-with-suspense', 'SuspenseFallback.mjs')
     response.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' })
     return response.end(content)
   }
 
   if (request.url === '/ClientSuspenseWrapper.mjs') {
-    const content = await read('04-with-server-suspense', 'ClientSuspenseWrapper.mjs')
+    const content = await read('06-with-suspense', 'ClientSuspenseWrapper.mjs')
     response.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' })
     return response.end(content)
   }
 
   if (request.url === '/client.mjs') {
-    const content = await read('04-with-server-suspense', 'client.mjs')
+    const content = await read('06-with-suspense', 'client.mjs')
     response.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' })
     return response.end(content)
   }
