@@ -6,6 +6,8 @@ import { html, head, body, meta, title, script } from '../hyperscript.mjs'
  * @property {string} title
  * @property {string} [lang]
  * @property {import('react').ReactNode} [children]
+ * @property {import('react').ReactNode} [headSlot]
+ * @property {import('react').ReactNode} [bodySlot]
  */
 
 /**
@@ -13,7 +15,7 @@ import { html, head, body, meta, title, script } from '../hyperscript.mjs'
  * @returns {import('react').ReactElement}
  */
 export default function Document(props) {
-  const { title: documentTitle, lang, children } = props
+  const { title: documentTitle, lang, children, headSlot, bodySlot } = props
   const charSet = 'UTF-8'
   const viewport = 'width=device-width, initial-scale=1.0'
 
@@ -24,7 +26,8 @@ export default function Document(props) {
       meta({ charSet }),
       meta({ name: 'viewport', content: viewport }),
       title(null, documentTitle),
+      headSlot
     ),
-    body(null, children)
+    body(null, children, bodySlot)
   )
 }
