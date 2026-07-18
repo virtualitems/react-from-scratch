@@ -1,6 +1,6 @@
-import { Activity, createElement, Fragment, Profiler, StrictMode, Suspense } from 'react'
+import { Activity, Component, createElement, Fragment, Profiler, StrictMode, Suspense } from 'react'
 
-export { Activity, createElement, Fragment, Profiler, StrictMode, Suspense }
+export { Activity, Component, createElement, Fragment, Profiler, StrictMode, Suspense }
 
 // Behavior
 export const area = createElement.bind(null, 'area')

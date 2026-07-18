@@ -1,4 +1,4 @@
-import React from 'react'
+import { Component, createElement } from './hyperscript.mjs'
 
 /**
  * @typedef {object} Props
@@ -20,9 +20,9 @@ const initialState = {
 /**
  * Error boundary component that renders a fallback UI when a child component throws.
  *
- * @extends {React.Component<Props, State>}
+ * @extends {import('react').Component<Props, State>}
  */
-export default class ErrorBoundary extends React.Component {
+export default class ErrorBoundary extends Component {
   /**
    * @param {Props} props
    */
@@ -78,6 +78,6 @@ export default class ErrorBoundary extends React.Component {
 
     const Fallback = this.props.fallback
 
-    return React.createElement(Fallback, { error, resetErrorBoundary: this.resetErrorBoundary })
+    return createElement(Fallback, { error, resetErrorBoundary: this.resetErrorBoundary })
   }
 }
