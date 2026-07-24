@@ -24,7 +24,7 @@ async function listener(request, response) {
   response.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
   Readable.fromWeb(prelude).pipe(response, { end: false })
 
-  resolve('Alejandro')
+  setTimeout(() => resolve('Alejandro'), 2000)
 
   if (postponed === null) {
     response.end()
