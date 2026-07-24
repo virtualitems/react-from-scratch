@@ -1,5 +1,5 @@
 import Document from '../shared/server/Document.mjs'
-import { createElement, p } from '../shared/hyperscript.mjs'
+import { createElement, p, Suspense } from '../shared/hyperscript.mjs'
 
 import Greeting from './Greeting.mjs'
 
